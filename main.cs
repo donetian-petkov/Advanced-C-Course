@@ -6,94 +6,15 @@ class MainClass {
   
   public static void Main (string[] args) {
 
-    int numOfInputs = int.Parse(Console.ReadLine());
+    int maxQuantity = int.Parse(Console.ReadLine());
 
-    Stack<int> elements = new Stack<int>();
+    Queue<int> orders = new Queue<int>( Console.ReadLine().Split(" ").Select(int.Parse).ToArray());
 
-    int maxElement = 1;
-    int minElement = 109;
+    
 
-    while (numOfInputs > 0)
-    {
-      int[] inputs = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
 
-      int command = inputs[0];
-      
-      switch (command) 
-      {
-        case 1:
-        int element = inputs[1];
-        
-        elements.Push(element);
-        if (element < minElement) 
-        {
-          minElement = element;
-        }
-        if (element > maxElement)
-        {
-          maxElement = element;
-        }
-        break;
+    
 
-        case 2:
-        if (elements.Count > 1)
-        {
-          if (maxElement == elements.Peek())
-          {
-            maxElement = int.MinValue;
-            
-            foreach (var elem in elements)
-            {
-              if (elem != elements.Peek() && elem > maxElement)
-              {
-                maxElement = elem;
-              } 
-            }
-          }
-          else if (minElement == elements.Peek())
-          {
-            minElement = int.MaxValue;
-            
-            foreach (var elem in elements)
-            {
-              if (elem != elements.Peek() && elem < minElement)
-              {
-                minElement = elem;
-              } 
-            }
-          }
-          elements.Pop();
-          elements.TrimExcess();
-        }
-        else if (elements.Count == 1)
-        {
-          elements.Clear();
-          minElement = 109;
-          maxElement = 1;
-        }
-        break;
-
-        case 3:
-        if (elements.Count > 0)
-        {
-        Console.WriteLine(maxElement);
-        }
-        break;
-
-        case 4:
-        if (elements.Count > 0)
-        {
-        Console.WriteLine(minElement);
-        }
-        break;
-
-      }
-
-      numOfInputs--;
-
-    }
-
-    Console.WriteLine(string.Join(", " , elements));
     
   }
 }

@@ -1,0 +1,44 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int maxQuantity = int.Parse(Console.ReadLine());
+            
+            bool isComplete = true;
+
+            Queue<int> orders = new Queue<int>( Console.ReadLine().Split(" ").Select(int.Parse).ToArray());
+
+            int maxElement = orders.Max(); 
+
+            Console.WriteLine(maxElement);
+
+            foreach (var element in orders)
+            {
+                if (maxQuantity >= element)
+                {
+                    orders = new Queue<int>(orders.Where(x => x != element));
+                    maxQuantity -= element;
+                }
+                else
+                {
+                    isComplete = false;
+                    break;
+                }
+            }
+
+            if (isComplete)
+            {
+                Console.WriteLine("Orders complete");
+            }
+            else
+            {
+                Console.Write("Orders left: ");
+                Console.Write(string.Join((" "),orders));
+            }
+
+        }
+    }
