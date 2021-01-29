@@ -1,0 +1,61 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Queue<string> songs = new Queue<string>(Console.ReadLine().Split((", ")));
+
+            while (songs.Any())
+            {
+                string[] commands = Console.ReadLine().Split().ToArray();
+
+                if (commands[0] == "Play")
+                {
+                    songs.Dequeue();
+                    songs.TrimExcess();
+                }
+                else if (commands[0] == "Add")
+                {
+                    StringBuilder songInput = new StringBuilder();
+                    
+                    for (int i = 1; i < commands.Length; i++)
+                    {
+                        songInput.Append(commands[i]);
+                        if (i == commands.Length-1)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            songInput.Append(" ");
+                        }
+                    }
+
+                    string song = songInput.ToString();
+
+                    if (songs.Contains(song))
+                    {
+                        Console.WriteLine($"{song} is already contained!");
+                    }
+                    else
+                    {
+                        songs.Enqueue(song);
+                    }
+                }
+                else if (commands[0] == "Show")
+                {
+                    Console.WriteLine(string.Join(", ", songs));
+                }
+            }
+
+            Console.WriteLine("No more songs!");
+        }
+    }
+}
