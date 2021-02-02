@@ -1,0 +1,56 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
+using System.Text;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int matrixSize = int.Parse(Console.ReadLine());
+
+            int[,] matrix = new int[matrixSize, matrixSize];
+
+            int sumPrimaryDiagonal = 0;
+            int sumSecondaryDiagonal = 0;
+
+            for (int i = 0; i < matrixSize; i++)
+            {
+                int[] matrixRow = Console.ReadLine().Split().Select(int.Parse).ToArray();
+
+                for (int j = 0; j < matrixSize; j++)
+                {
+                    matrix[i, j] = matrixRow[j];
+
+                    if (i == j)
+                    {
+                        sumPrimaryDiagonal += matrix[i, j];
+                    }
+                    
+                    if (i + j + 1 == matrixSize)
+                    {
+                        sumSecondaryDiagonal += matrix[i, j];
+                    }
+                }
+            }
+            
+            int diagonalDifference = 0;
+
+            if (sumPrimaryDiagonal > sumSecondaryDiagonal)
+            {
+                diagonalDifference = sumPrimaryDiagonal - sumSecondaryDiagonal;
+            }
+            else if (sumPrimaryDiagonal < sumSecondaryDiagonal)
+            {
+                diagonalDifference = sumSecondaryDiagonal - sumPrimaryDiagonal;
+            }
+
+            Console.WriteLine(diagonalDifference);
+
+        }
+    }
+}
