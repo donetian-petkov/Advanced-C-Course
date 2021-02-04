@@ -16,15 +16,15 @@ namespace ConsoleApp2
             int rows = matrixDimensions[0];
             int cols = matrixDimensions[1];
 
-            int threeSquareSum = 0;
-            int bestThreeSquareSum = 0;
-            int[,] bestThreeSquareMatrix = new int[3, 3];
+            long threeSquareSum = 0;
+            long bestThreeSquareSum = long.MinValue;
+            long[,] bestThreeSquareMatrix = new long[3, 3];
 
-            int[,] matrix = new int[rows, cols];
+            long[,] matrix = new long[rows, cols];
             
             for (int row = 0; row < matrix.GetLength(0); row++)
             {
-                int[] rowInput = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+                long[] rowInput = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
                 
                 for (int col = 0; col < matrix.GetLength(1); col++)
                 {
@@ -58,7 +58,7 @@ namespace ConsoleApp2
                             {
                                 bestThreeSquareSum = threeSquareSum;
 
-                                int[,] tempMatrix =
+                                long[,] tempMatrix =
                                 {
                                     {
                                         matrix[row - 1, col - 1], matrix[row - 1, col], matrix[row - 1, col + 1]
@@ -80,8 +80,6 @@ namespace ConsoleApp2
 
             Console.WriteLine($"Sum = {bestThreeSquareSum}");
 
-            if (bestThreeSquareSum != 0)
-            {
                 for (int row = 0; row < bestThreeSquareMatrix.GetLength(0); row++)
 
                 {
@@ -96,8 +94,6 @@ namespace ConsoleApp2
 
                     Console.WriteLine();
                 }
-            }
-
         }
     }
 }
