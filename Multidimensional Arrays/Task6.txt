@@ -29,35 +29,29 @@ namespace ConsoleApp2
 
             for (int row = 0; row < matrix.Length; row++)
             {
-                bool isEqual = false;
 
                 if (row < matrix.Length - 1)
                 {
                     if (matrix[row].Length == matrix[row + 1].Length)
                     {
-                        isEqual = true;
+                        for (int i = 0; i < matrix[row].Length; i++)
+                        {
+                            matrix[row][i] *= 2;
+                            matrix[row + 1][i] *= 2;
+                        }
                     }
-                    
-                    if (isEqual)
+                    else
+                    {
+                        for (int i = 0; i < matrix[row].Length; i++)
                         {
-                            for (int i = 0; i < matrix[row].Length; i++)
-                            {
-                                matrix[row][i] *= 2;
-                                matrix[row + 1][i] *= 2;
-                            }
+                            matrix[row][i] /= 2;
                         }
-                        else
-                        {
-                            for (int i = 0; i < matrix[row].Length; i++)
-                            {
-                                matrix[row][i] /= 2;
-                            }
 
-                            for (int j = 0; j < matrix[row + 1].Length; j++)
-                            {
-                                matrix[row+1][j] /= 2;
-                            }
+                        for (int j = 0; j < matrix[row + 1].Length; j++)
+                        {
+                            matrix[row + 1][j] /= 2;
                         }
+                    }
                 }
             }
 
