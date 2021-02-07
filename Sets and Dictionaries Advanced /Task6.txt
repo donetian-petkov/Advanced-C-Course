@@ -17,11 +17,6 @@ namespace ConsoleApp2
 
             for (int i = 0; i < numberOfInputs; i++)
             {
- //               string[] input = string.Concat(Console.ReadLine().Where(c => !char.IsWhiteSpace(c))).Split("->");
-
- //               string color = input[0];
- //               string[] items = input[1].Split(",");
-
                   string[] input = Console.ReadLine().Split(new[] {" -> ", ","}, StringSplitOptions.RemoveEmptyEntries);
                   string color = input[0];
                   string[] items = input.Skip(1).ToArray();
