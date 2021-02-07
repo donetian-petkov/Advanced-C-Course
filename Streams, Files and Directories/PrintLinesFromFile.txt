@@ -1,0 +1,31 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.IO;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string filePath = "/Users/donetianpetkov/text.txt";
+
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                string line = reader.ReadLine();
+                int counter = 0;
+                
+                while (line != null)
+                {
+                    Console.WriteLine(line);
+
+                    line = reader.ReadLine();
+                }
+            }
+        }
+    }
+}
