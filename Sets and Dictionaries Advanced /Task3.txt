@@ -13,7 +13,7 @@ namespace ConsoleApp2
         {
             int numberInput = int.Parse(Console.ReadLine());
 
-            HashSet<string> periodTable = new HashSet<string>();
+            SortedSet<string> periodTable = new SortedSet<string>();
 
             for (int i = 0; i < numberInput; i++)
             {
@@ -24,10 +24,8 @@ namespace ConsoleApp2
                     periodTable.Add(element);
                 }
             }
-
-            List<string> sortedPeriodTable = periodTable.OrderBy(x => x).ToList();
             
-            Console.WriteLine(string.Join(" ", sortedPeriodTable));
+            Console.WriteLine(string.Join(" ", periodTable));
 
         }
     }
