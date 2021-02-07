@@ -13,13 +13,16 @@ namespace ConsoleApp2
         {
             int[] inputNumber = Console.ReadLine().Split().Select(int.Parse).ToArray();
 
+            int firstSetLength = inputNumber[0];
+            int secondSetLength = inputNumber[1];
+
             HashSet<int> firstSet = new HashSet<int>();
 
             HashSet<int> secondSet = new HashSet<int>();
 
-            for (int i = 0; i < (inputNumber[0]+inputNumber[1]); i++)
+            for (int i = 0; i < (firstSetLength + secondSetLength); i++)
             {
-                if (i < inputNumber[0])
+                if (i < firstSetLength)
                 {
                     firstSet.Add(int.Parse(Console.ReadLine()));
                 }
@@ -28,10 +31,18 @@ namespace ConsoleApp2
                     secondSet.Add(int.Parse(Console.ReadLine()));
                 }
             }
-            
-            for (int i = 0; i < )
 
-            Console.WriteLine(string.Join(Environment.NewLine, usernames));
+            HashSet<int> duplicateSet = new HashSet<int>();
+            
+                foreach (var data in firstSet)
+                {
+                    if (secondSet.Contains(data))
+                    {
+                        duplicateSet.Add(data);
+                    }
+                }
+                
+            Console.WriteLine(string.Join(" ", duplicateSet));
 
         }
     }
