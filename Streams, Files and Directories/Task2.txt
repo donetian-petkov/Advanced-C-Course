@@ -1,0 +1,47 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.IO;
+using System.Text.RegularExpressions;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string filePathInput = "/Users/donetianpetkov/text.txt";
+            string filePathOutput = "/Users/donetianpetkov/output.txt";
+
+            string[] lines = File.ReadAllLines(filePathInput);
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                char[] line = string.Join(string.Empty, lines[i]).ToCharArray();
+
+                int specialCharacterCount = 0;
+                int lettersCount = 0;
+                int lineNumber = i + 1;
+                
+                foreach (var character in line)
+                {
+                    Regex rgx = new Regex(@"[!,.?\-']");
+                    Regex rgx2 = new Regex(@"[A-z]");
+                    if (rgx.IsMatch(character.ToString()))
+                    {
+                        specialCharacterCount++;
+                    }
+                    else if (rgx2.IsMatch(character.ToString()))
+                    {
+                        lettersCount++;
+                    }
+                }
+                
+                File.AppendAllText(filePathOutput, $"Line {lineNumber}: {lines[i]} ({lettersCount})({specialCharacterCount})\n");
+            }
+        }
+    }
+}
