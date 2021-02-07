@@ -1,0 +1,34 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
+using System.Text;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int numberInput = int.Parse(Console.ReadLine());
+
+            HashSet<string> periodTable = new HashSet<string>();
+
+            for (int i = 0; i < numberInput; i++)
+            {
+                string[] input = Console.ReadLine().Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var element in input)
+                {
+                    periodTable.Add(element);
+                }
+            }
+
+            List<string> sortedPeriodTable = periodTable.OrderBy(x => x).ToList();
+            
+            Console.WriteLine(string.Join(" ", sortedPeriodTable));
+
+        }
+    }
+}
