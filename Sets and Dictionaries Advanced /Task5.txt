@@ -1,0 +1,38 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
+using System.Text;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            char[] sentence = Console.ReadLine().ToCharArray();
+
+            SortedDictionary<char, int> sentenceCharacters = new SortedDictionary<char, int>();
+
+            for (int i = 0; i < sentence.Length; i++)
+            {
+                char character = sentence[i];
+                
+                if (sentenceCharacters.ContainsKey(character))
+                {
+                    sentenceCharacters[character]++;
+                }
+                else
+                {
+                    sentenceCharacters[character] = 1;
+                }
+            }
+
+            foreach (var character in sentenceCharacters)
+            {
+                Console.WriteLine($"{character.Key}: {character.Value} time/s");
+            }
+        }
+    }
+}
