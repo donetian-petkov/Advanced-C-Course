@@ -1,0 +1,83 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.IO;
+using Microsoft.VisualBasic;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string filePathInput = "/Users/donetianpetkov/words.txt";
+            string filePathCompare = "/Users/donetianpetkov/text.txt";
+            string filePathOutput = "/Users/donetianpetkov/actualResults.txt";
+            string filePathExpectedOutput = "/Users/donetianpetkov/expectedResult.txt";
+            string filePathComparedWords = "/Users/donetianpetkov/comparedWords.txt";
+
+            string[] words = File.ReadAllLines(filePathInput);
+
+            string[] sentences = File.ReadAllLines(filePathCompare);
+
+            Dictionary<string, int> matchingWords = new Dictionary<string, int>();
+
+            for (int i = 0; i < sentences.Length; i++)
+            {
+                string[] sentence = sentences[i].Split(new char[] {' ', '!', ',', '.', '?', '-'}, StringSplitOptions.RemoveEmptyEntries);
+                
+                foreach (var word in sentence)
+                {
+                    string newWord = word.ToLower();
+                    
+                    if (words.Contains(newWord))
+                    {
+                        if (matchingWords.ContainsKey(newWord))
+                        {
+                            matchingWords[newWord]++;
+                        }
+                        else
+                        {
+                            matchingWords.Add(newWord, 1);
+                        }
+                    }
+                }
+            }
+
+            foreach (var word in matchingWords)
+            {
+                File.AppendAllText(filePathOutput, $"{word.Key} - {word.Value}\n");
+            }
+
+            Dictionary<string, int> sortedMatchingWords = matchingWords
+                .OrderByDescending(x => x.Value)
+                .ToDictionary(x => x.Key,
+                    x => x.Value);
+            ;
+
+            string[] expectedOutputLines = File.ReadAllLines(filePathExpectedOutput);
+
+            Dictionary<string, int> expectedMatchingWords = new Dictionary<string, int>();
+            Dictionary<string, int> comparedWords = new Dictionary<string, int>();
+
+            foreach (var word in expectedOutputLines)
+            {
+                string[] wordInput = word.Split(" - ");
+
+                string key = wordInput[0];
+                int value = int.Parse(wordInput[1]);
+
+                if (sortedMatchingWords.ContainsKey(key))
+                {
+                    comparedWords.Add(key, sortedMatchingWords[key] - value);
+                }
+            }
+
+            foreach (var word in comparedWords)
+            {
+                File.AppendAllText(filePathComparedWords, $"{word.Key} - difference: {word.Value}\n");
+            }
+        }
+
+    }
+    }
