@@ -1,0 +1,35 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.IO;
+using Microsoft.VisualBasic;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string directoryPath = ReadDirectoryPath();
+
+            string extension = Console.ReadLine();
+
+            string[] files = Directory.GetFiles(directoryPath, $"*.{extension}");
+
+            Console.WriteLine(string.Join(" ", files));
+        }
+        
+        static string ReadDirectoryPath()
+        {
+            string directoryPath = Console.ReadLine();
+
+            if (!Directory.Exists(directoryPath))
+            {
+                ReadDirectoryPath();
+            }
+
+            return directoryPath;
+        }
+
+    }
+}
