@@ -1,0 +1,40 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Channels;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int range = int.Parse(Console.ReadLine());
+
+            List<int> dividers = Console.ReadLine()
+                .Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse)
+                .ToList();
+
+            Func<List<int>, int, bool> checkNumber = (numbers, number) =>
+            {
+                bool canBeDivided = true;
+                
+                foreach (var n in numbers)
+                {
+                    if (number % n != 0)
+                    {
+                        canBeDivided = false;
+                    }
+                }
+
+                return canBeDivided;
+            };
+
+            List<int> numbers = new List<int>(Enumerable.Range(1, range).ToArray());
+            
+            Console.WriteLine(string.Join(" ", numbers.Where(n => checkNumber(dividers,n))));
+        }
+        
+    }
+}
