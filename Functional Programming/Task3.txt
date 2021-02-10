@@ -1,0 +1,20 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> lines = Console.ReadLine().Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            
+            Func<List<int>,int> minNumber = lines => lines.Min();
+
+            Console.Write(minNumber(lines));
+
+        }
+
+    }
+}
