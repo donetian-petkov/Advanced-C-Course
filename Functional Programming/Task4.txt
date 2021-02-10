@@ -1,0 +1,67 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] range = Console.ReadLine()
+                .Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse).ToArray();
+            
+            int start = range[0];
+            int end = range[1];
+
+            Func<int, int, List<int>> generateRangeOfNums = (s, e) =>
+            {
+                List<int> nums = new List<int>();
+                for (int i = start; i <= end; i++)
+                {
+                    nums.Add(i);
+                }
+
+                return nums;
+            };
+
+            List<int> numbers = generateRangeOfNums(start, end);
+            
+
+            string condition = Console.ReadLine().ToLower();
+            
+
+            if (condition == "odd")
+            {
+                Predicate<int> checker = number => number % 2 !=0 && number >= start && number <= end;
+                Console.WriteLine(string.Join(" ", MyWhere(numbers, checker)));
+            }
+            else
+            {
+                Predicate<int> checker = number => number % 2 == 0 && number >= start && number <= end;
+                Console.WriteLine(string.Join(" ", MyWhere(numbers, checker)));
+
+            }
+
+           
+            
+        }
+
+        static List<int> MyWhere(List<int> numbers, Predicate<int> predicate)
+        {
+            List<int> newNumbers = new List<int>();
+
+            foreach (var number in numbers)
+            {
+                if (predicate(number))
+                {
+                    newNumbers.Add(number);
+                }
+            }
+
+            return newNumbers;
+        }
+
+    }
+}
