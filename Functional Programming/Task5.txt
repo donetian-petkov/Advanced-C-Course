@@ -19,7 +19,7 @@ namespace ConsoleApp2
             Func<List<int>, List<int>> multiply = number => numbers.Select(n => n*2).ToList();
             Func<List<int>, List<int>> subtract = number => numbers.Select(n => n - 1).ToList();
             Func<List<int>, string> print = numbers => string.Join(" ", numbers);
-            Func<string, bool> end = endInput => (endInput == "end") ? return false : return true;
+        //  Func<string, bool> end = endInput => (endInput == "end") ?  false : true;
 
             while (true)
             {
@@ -27,7 +27,23 @@ namespace ConsoleApp2
 
                 if (input == "add")
                 {
-                    
+                    numbers = add(numbers);
+                }
+                else if (input == "multiply")
+                {
+                   numbers = multiply(numbers);
+                }
+                else if (input == "subtract")
+                {
+                    numbers = subtract(numbers);
+                }
+                else if (input == "print")
+                {
+                    Console.WriteLine(print(numbers));
+                }
+                else if (input == "end")
+                {
+                    break;
                 }
             }
         }

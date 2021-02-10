@@ -31,20 +31,20 @@ namespace ConsoleApp2
 
             string condition = Console.ReadLine().ToLower();
             
+            Predicate<int> checker = null;
 
             if (condition == "odd")
             {
-                Predicate<int> checker = number => number % 2 !=0 && number >= start && number <= end;
-                Console.WriteLine(string.Join(" ", MyWhere(numbers, checker)));
+                checker = number => number % 2 !=0 && number >= start && number <= end;
+             
             }
             else
             {
-                Predicate<int> checker = number => number % 2 == 0 && number >= start && number <= end;
-                Console.WriteLine(string.Join(" ", MyWhere(numbers, checker)));
-
+                checker = number => number % 2 == 0 && number >= start && number <= end;
+                
             }
 
-           
+            Console.WriteLine(string.Join(" ", MyWhere(numbers, checker)));
             
         }
 
