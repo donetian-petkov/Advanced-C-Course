@@ -1,0 +1,34 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> numbers = Console.ReadLine()
+                .Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse).ToList();
+
+            int delimiter = int.Parse(Console.ReadLine());
+
+            Func<List<int>, int, List<int>> reverseArray = (numbers,delimiter) =>
+            {
+                List<int> newNumbers = new List<int>();
+
+                Func<int, int, bool> checker = (x, y) => x % y != 0;
+
+                newNumbers = numbers.Where(n => checker(n,delimiter)).ToList();
+
+                newNumbers.Reverse();
+                
+                return newNumbers;
+            };
+            
+            Console.WriteLine(string.Join(" ", reverseArray(numbers, delimiter)));
+        }
+        
+    }
+}
