@@ -1,0 +1,54 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading.Channels;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int nameLength = int.Parse(Console.ReadLine());
+
+            Func<string,int> calculateNameLength = name =>
+            {
+                char[] letters = name.ToCharArray();
+
+                int charSum = 0;
+
+                foreach (var letter in letters)
+                {
+                    
+                    charSum += (int)letter;
+                }
+                
+
+                return charSum;
+
+            };
+
+
+           List<string> names = Console.ReadLine()
+              .Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
+            foreach (var name in names)
+            {
+                if (CheckName(name, nameLength, calculateNameLength))
+                {
+                    Console.WriteLine(name);
+                    break;
+                }
+            }
+          
+        }
+
+        static bool CheckName(string name, int nameLength, Func<string, int> calculateNameLength)
+        {
+            return calculateNameLength(name) >= nameLength;
+        }
+        
+    }
+}
