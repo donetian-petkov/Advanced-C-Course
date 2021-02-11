@@ -30,6 +30,11 @@ namespace DefiningClasses
                 numberOfPeople--;
             }
 
+        // List<Person> filteredPeople = people
+        //       .Where(p => p > p.Age > 30) 
+        //        .OrderBy(p => p.Name)
+        //        .ToList();
+
             olderPeople = olderPeople.OrderBy(x => x.Name).ToList();
 
             foreach (var person in olderPeople)
