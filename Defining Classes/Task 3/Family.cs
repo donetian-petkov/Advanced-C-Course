@@ -17,19 +17,12 @@ public class Family
 
     public Person GetOldestMember()
     {
-        int oldestAge = Int32.MinValue;
-        Person oldestMember = new Person();
+        Person person = this.members
+        .OrderByDescending(p => p.Age)
+        .FirstOrDefault();
 
-        foreach (var member in this.members)
-        {
-            if (member.Age > oldestAge)
-            {
-                oldestAge = member.Age;
-                oldestMember = member;
-            }
-        }
+        return person;
 
-        return oldestMember;
     }
 
 }
