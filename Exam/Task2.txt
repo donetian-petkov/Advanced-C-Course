@@ -1,0 +1,165 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ConsoleApp4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int n = int.Parse(Console.ReadLine());
+
+            string[] playersMoveInput = Console.ReadLine()
+                .Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries);
+            
+            int firstPlayerShips = 0;
+            int secondPlayerShips = 0;
+            int totalShipsDestroyes = 0;
+            
+            char[,] matrix = new char[n, n];
+
+            for (int row = 0; row < matrix.GetLength(0); row++)
+            {
+                string[] currentRow = Console.ReadLine().Split(" ");
+
+                for (int col = 0; col < matrix.GetLength(1); col++)
+                {
+                    char character = char.Parse(currentRow[col]);
+                    
+                    matrix[row, col] = character;
+
+                    if (character == '<')
+                    {
+                        firstPlayerShips++;
+                    }
+                    else if (character == '>')
+                    {
+                        secondPlayerShips++;
+                    }
+                }
+            }
+            
+
+            for (int i = 0; i < playersMoveInput.Length; i++)
+            {
+                int[] coordinates = playersMoveInput[i].Split(" ").Select(int.Parse).ToArray();
+
+              int row = coordinates[0];
+              int col = coordinates[1];
+
+
+              if (row > n || row < 0)
+                {
+                    continue;
+                }
+
+                if (col > n || col < 0)
+                {
+                    continue;
+                }
+                
+                char field = matrix[row, col];
+
+                if (field == '>' && i%2 == 0)
+                {
+                    matrix[row, col] = 'X';
+                    secondPlayerShips--;
+                    totalShipsDestroyes++;
+                }
+                else if (field == '<' && i % 2 != 0)
+                {
+                    matrix[row, col] = 'X';
+                    firstPlayerShips--;
+                    totalShipsDestroyes++;
+                    
+                }
+                else if (field == '#')
+                {
+                    Dictionary< Dictionary<int, int>, char> damagedFields = new Dictionary<Dictionary<int, int>, char>();
+
+                    if (row - 1 >= 0)
+                    {
+                        if (col - 1 >= 0)
+                        {
+                            damagedFields.Add(new Dictionary<int,int>(){{row-1,col-1}},matrix[row-1,col-1]);
+                        }
+
+                        if (col + 1 <= matrix.GetLength(1)-1)
+                        {
+                            damagedFields.Add(new Dictionary<int,int>(){{row-1,col+1}},matrix[row-1,col+1]);
+                        }
+                        
+                        damagedFields.Add(new Dictionary<int,int>(){{row-1,col}},matrix[row-1,col]);
+                        
+                    }
+                    
+                    if (row + 1 <= matrix.GetLength(0) - 1)
+                    {
+                        if (col - 1 >= 0)
+                        {
+                            damagedFields.Add(new Dictionary<int,int>(){{row+1,col-1}},matrix[row+1,col-1]);
+                        }
+
+                        if (col + 1 <= matrix.GetLength(1)-1)
+                        {
+                            damagedFields.Add(new Dictionary<int,int>(){{row+1,col+1}},matrix[row+1,col+1]);
+                        }
+                        
+                        damagedFields.Add(new Dictionary<int,int>(){{row+1,col}},matrix[row+1,col]);
+                    }
+                    
+                    if (col - 1 >= 0)
+                    {
+                        damagedFields.Add(new Dictionary<int,int>(){{row,col-1}},matrix[row,col-1]);
+                    }
+
+                    if (col + 1 <= matrix.GetLength(1)-1)
+                    {
+                        damagedFields.Add(new Dictionary<int,int>(){{row,col+1}},matrix[row,col+1]);
+                    }
+
+                    damagedFields.Add(new Dictionary<int,int>(){{row,col}},matrix[row,col]);
+
+                    foreach (var element in damagedFields)
+                    {
+                        if (element.Value == '<')
+                        {
+                            int r = element.Key.First().Key;
+                            int c = element.Key.First().Value;
+                            matrix[r,c] = 'X';
+                            firstPlayerShips--;
+                            totalShipsDestroyes++;
+                        }
+                        else if (element.Value == '>')
+                        {
+                            int r = element.Key.First().Key;
+                            int c = element.Key.First().Value;
+                            matrix[r,c] = 'X';
+                            secondPlayerShips--;
+                            totalShipsDestroyes++;
+                        }
+                    }
+                    
+                }
+
+                if (firstPlayerShips <= 0)
+                {
+                    Console.WriteLine($"Player Two has won the game! {totalShipsDestroyes} ships have been sunk in the battle.");
+                    break;
+                }
+                else if (secondPlayerShips <= 0)
+                {
+                    Console.WriteLine(
+                        $"Player One has won the game! {totalShipsDestroyes} ships have been sunk in the battle.");
+                    break;
+                }
+            }
+
+            if (secondPlayerShips > 0 && firstPlayerShips > 0)
+            {
+                Console.WriteLine($"It's a draw! Player One has {firstPlayerShips} ships left. Player Two has {secondPlayerShips} ships left.");
+            }
+        }
+    }
+}
